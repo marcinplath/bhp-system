@@ -1,0 +1,37 @@
+INSERT INTO users (email, password, role)
+VALUES ('admin@test.com', '$2b$10$ulWfd6nyYjL8Y45eLLCVtOyqiu2HO33wxD18SSvXKYcbSqzPWpZ8K', 'admin');
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'user',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE invitations (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    inviter VARCHAR(255) NOT NULL,
+	link uuid DEFAULT gen_random_uuid() NOT NULL,
+    expires_at TIMESTAMP WITHOUT TIME ZONE,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE refresh_tokens (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  token TEXT NOT NULL,
+  expires_at TIMESTAMP NOT NULL
+);
+
+
+CREATE TABLE questions (
+  id SERIAL PRIMARY KEY,
+  question_text TEXT NOT NULL,
+  option_a TEXT NOT NULL,
+  option_b TEXT NOT NULL,
+  option_c TEXT NOT NULL,
+  correct_option CHAR(1) NOT NULL CHECK (correct_option IN ('A','B','C'))
+);
