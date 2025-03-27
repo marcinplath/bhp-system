@@ -84,17 +84,17 @@ Projekt podzielony jest na część serwerową (**backend**) oraz część klien
   
 - **frontend/** – kod źródłowy aplikacji frontendowej (React + Vite):
   - `frontend/index.html` – główny plik HTML dla aplikacji React (Vite automatycznie go wykorzystuje).
-  - `frontend/tailwind.config.js` – konfiguracja Tailwind CSS (np. wskazanie ścieżek do plików źródłowych, z których mają być zbierane klasy CSS).
-  - `frontend/vite.config.js` – konfiguracja Vite (np. port deweloperski, ewentualne proxy do API – w tym projekcie brak dedykowanego proxy, komunikacja odbywa się na pełne URL backendu).
+  - `frontend/tailwind.config.js` – konfiguracja Tailwind CSS.
+  - `frontend/vite.config.js` – konfiguracja Vite.
   - `frontend/src/` – główny kod aplikacji React:
     - `src/main.jsx` – punkt wejścia React. Inicjalizuje aplikację, np. montuje `<App />` do drzewa DOM, prawdopodobnie opakowując całość w `<BrowserRouter>` (React Router) i dostawcę kontekstu autoryzacji.
-    - `src/App.jsx` – główny komponent React definiujący strukturę nawigacji/routing. Zapewne zawiera konfigurację tras (np. użycie biblioteki **React Router** do zdefiniowania ścieżek takich jak logowanie, panel admina, strona testu itp.).
+    - `src/App.jsx` – główny komponent React definiujący strukturę nawigacji/routing. Zawiera konfigurację tras (np. użycie biblioteki **React Router** do zdefiniowania ścieżek takich jak logowanie, panel admina, strona testu itp.).
     - `src/pages/` – komponenty odpowiadające poszczególnym podstronom aplikacji:
-      - Przykładowo, można tu oczekiwać stron takich jak `Login.jsx`, `AdminPanel.jsx`, `Invitations.jsx`, `Questions.jsx`, `ManageUsers.jsx`, `Test.jsx` (rozpoczęcie testu przez gościa), `TestResult.jsx` (wynik testu), czy `VerifyCode.jsx` (formularz weryfikacji kodu dostępu). **(Nazwy plików są przypuszczalne na podstawie funkcjonalności – należy sprawdzić rzeczywiste komponenty w katalogu** `pages`**.)**
+      - Przykładowo, można tu oczekiwać stron takich jak `Login.jsx`, `AdminPanel.jsx`, `Invitations.jsx`, `Questions.jsx`, `ManageUsers.jsx`, `Test.jsx` (rozpoczęcie testu przez gościa), `TestResult.jsx` (wynik testu), czy `VerifyCode.jsx` (formularz weryfikacji kodu dostępu).
     - `src/components/` – mniejsze, wielokrotnie używane komponenty UI. Mogą tu być komponenty formularzy (np. pola logowania), przyciski, nagłówek, itp., które są wykorzystywane przez strony.
     - `src/context/` – definicje kontekstu React dla globalnego stanu:
-      - `AuthContext.jsx` – kontekst uwierzytelnienia. Prawdopodobnie zarządza stanem bieżącego użytkownika (tokenem JWT, informacjami o roli itp.) i udostępnia metody logowania, wylogowania, automatycznego odświeżania tokenu. Komponenty aplikacji mogą korzystać z tego kontekstu, aby np. przekierować niezalogowanych użytkowników lub dołączyć token do zapytań.
-      - `PublicRoute.jsx` – komponent trasy publicznej/chronionej. Możliwe, że warunkuje dostęp do pewnych podstron: np. przekierowuje zalogowanych użytkowników z powrotem do panelu, jeśli wejdą na stronę logowania (lub odwrotnie – chroni strony admina przed dostępem niezalogowanych).
+      - `AuthContext.jsx` – kontekst uwierzytelnienia. Zarządza stanem bieżącego użytkownika (tokenem JWT, informacjami o roli itp.) i udostępnia metody logowania, wylogowania, automatycznego odświeżania tokenu. Komponenty aplikacji mogą korzystać z tego kontekstu, aby np. przekierować niezalogowanych użytkowników lub dołączyć token do zapytań.
+      - `PublicRoute.jsx` – komponent trasy publicznej/chronionej. Między innymi warunkuje dostęp do pewnych podstron: np. przekierowuje zalogowanych użytkowników z powrotem do panelu, jeśli wejdą na stronę logowania
     - `src/api/` – moduły do komunikacji z backendowym API (rozbicie logiki wywołań fetch/axios na osobne pliki):
       - `api.js` – konfiguracja klienta API (np. ustawienie bazowego URL dla zapytań do backendu). Może eksportować funkcje pomocnicze do wykonywania żądań HTTP.
       - `auth.js` – funkcje wywołujące endpointy uwierzytelnienia: np. `login(email, password)` (POST na `/auth/login`), `register(data)` (POST `/auth/register`), `logout()` itp.  
@@ -102,7 +102,7 @@ Projekt podzielony jest na część serwerową (**backend**) oraz część klien
       - `questions.js` – funkcje do zarządzania pytaniami testowymi: pobieranie wszystkich pytań (GET `/admin/questions`), dodawanie nowego pytania (POST), edycja pytania (PUT), usunięcie (DELETE).
       - `manageUsers.js` – funkcje do zarządzania użytkownikami systemu: pobieranie listy użytkowników (GET `/admin/users`), tworzenie nowego konta (POST `/admin/create-user`), usuwanie użytkownika (DELETE).
       - `tests.js` – funkcje związane z przebiegiem testu BHP dla gościa: pobranie pytań na podstawie linku zaproszenia (GET `/api/test/:link`), przesłanie odpowiedzi (POST `/api/test/:link/submit`), sprawdzenie kodu dostępu (GET `/api/verify-access/:code`).
-    - `src/index.css` – główny plik CSS wykorzystywany przez Tailwind (prawdopodobnie importowany do aplikacji; Tailwind generuje style na podstawie użytych klas w plikach `.jsx`).
+    - `src/index.css` – główny plik CSS.
   
 - **screenshots/** – katalog z zrzutami ekranu aplikacji (pomocnicze grafiki dokumentujące interfejs, np. formularz logowania, panel zaproszeń, itp.). **Nie jest to część działania aplikacji**, ale może pomóc zrozumieć wygląd i przepływ działania systemu. Przykładowe pliki: `login.png` (ekran logowania), `invitations.png` (zarządzanie zaproszeniami), `questions.png` (zarządzanie pytaniami), `test.png` (ekran wypełniania testu przez gościa), `test-success.png` / `test-fail.png` (wynik testu), `access-code-mail.png` (przykład e-maila z kodem dostępu), `verify-access-code.png` (ekran weryfikacji kodu dostępu).
 
