@@ -26,3 +26,9 @@ dist-ssr
 eslint.config.js
 package-lock.json
 package.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
