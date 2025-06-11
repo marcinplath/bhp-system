@@ -16,7 +16,7 @@ test("Dodanie nowego użytkownika przez administratora", async ({ page }) => {
   // Dodanie nowego użytkownika
   await page.getByRole("textbox", { name: "np. user@example.com" }).fill(email);
   await page.getByPlaceholder("********").fill("goofy123#");
-  await page.getByRole("combobox").selectOption("user"); // jeśli masz combobox do wyboru roli
+  await page.getByRole("combobox").selectOption("user");
   await page.getByRole("button", { name: "Utwórz" }).click();
 
   // Asercja – sprawdzenie czy pojawił się na liście
